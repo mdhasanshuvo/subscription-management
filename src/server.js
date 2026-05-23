@@ -19,16 +19,32 @@ const app = express();
 
 // ====== MIDDLEWARE SETUP ======
 
-// Security middleware
-app.use(helmet());
+// Security middleware with custom CSP for Swagger UI
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+      imgSrc: ["'self'", "data:", "https://"],
+      fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com"],
+    },
+  },
+}));
 
 // Logging middleware
 app.use(morgan('combined'));
 
 // CORS middleware
+const corsOrigin = process.env.NODE_ENV === 'production' 
+  ? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '*')
+  : '*';
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? process.env.VERCEL_URL : '*',
+  origin: corsOrigin,
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Body parser middleware
@@ -40,7 +56,24 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerSpec = require('./swagger/config');
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const swaggerOptions = {
+  customCss: `
+    .topbar { display: none; }
+    .swagger-ui .topbar { display: none; }
+  `,
+  customSiteTitle: 'Subscription & Billing API',
+  swaggerOptions: {
+    persistAuthorization: true,
+    displayOperationId: true,
+    filter: true,
+    showRequestHeaders: true,
+    presets: [
+      require('swagger-ui-express/swagger-ui-standalone-preset')
+    ]
+  },
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
 
 // ====== HEALTH CHECK ======
 app.get('/health', (req, res) => {

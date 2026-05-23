@@ -1,5 +1,25 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 
+const getServers = () => {
+  const servers = [];
+  
+  // Add production server if VERCEL_URL is set
+  if (process.env.VERCEL_URL) {
+    servers.push({
+      url: `https://${process.env.VERCEL_URL}`,
+      description: 'Production server (Vercel)',
+    });
+  }
+  
+  // Add development server
+  servers.push({
+    url: 'http://localhost:5000',
+    description: 'Development server (Local)',
+  });
+  
+  return servers;
+};
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -28,16 +48,7 @@ Use the Login endpoint to get a JWT token, then use it in the Authorization head
         name: 'API Support',
       },
     },
-    servers: [
-      {
-        url: 'http://localhost:5000',
-        description: 'Development server',
-      },
-      {
-        url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://api.example.com',
-        description: 'Production server',
-      },
-    ],
+    servers: getServers(),
     components: {
       securitySchemes: {
         bearerAuth: {
