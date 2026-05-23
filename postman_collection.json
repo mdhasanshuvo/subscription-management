@@ -1,0 +1,497 @@
+{
+  "info": {
+    "_postman_id": "subscription-api-collection",
+    "name": "Subscription & Billing API",
+    "description": "Complete API collection for subscription management system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"John Doe\",\"email\": \"john@example.com\",\"password\": \"password123\",\"passwordConfirm\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"john@example.com\",\"password\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Plans",
+      "item": [
+        {
+          "name": "Get All Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/plans",
+              "host": ["{{base_url}}"],
+              "path": ["api", "plans"]
+            }
+          }
+        },
+        {
+          "name": "Get Plan by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/plans/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "plans", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Create Plan (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"planName\": \"Premium\",\"price\": 29.99,\"durationInDays\": 30,\"features\": [\"Feature 1\", \"Feature 2\"],\"activeStatus\": true}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/plans",
+              "host": ["{{base_url}}"],
+              "path": ["api", "plans"]
+            }
+          }
+        },
+        {
+          "name": "Update Plan (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"planName\": \"Premium Pro\",\"price\": 39.99}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/plans/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "plans", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Delete Plan (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/plans/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "plans", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Purchase Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"planId\": \"{{plan_id}}\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/purchase",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", "purchase"]
+            }
+          }
+        },
+        {
+          "name": "Get Active Subscription",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/active",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", "active"]
+            }
+          }
+        },
+        {
+          "name": "Get Subscription History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/history",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", "history"]
+            }
+          }
+        },
+        {
+          "name": "Get Subscription by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Upgrade Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"currentSubscriptionId\": \"{{subscription_id}}\",\"newPlanId\": \"{{new_plan_id}}\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/upgrade",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", "upgrade"]
+            }
+          }
+        },
+        {
+          "name": "Downgrade Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"currentSubscriptionId\": \"{{subscription_id}}\",\"newPlanId\": \"{{new_plan_id}}\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/downgrade",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", "downgrade"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"reason\": \"No longer needed\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/subscriptions/:id/cancel",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriptions", ":id", "cancel"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "Payment Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-webhook-signature",
+                "value": "{{webhook_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"event\": \"payment_success\",\"subscriptionId\": \"{{subscription_id}}\",\"timestamp\": \"2025-05-23T10:00:00Z\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/webhooks/payment-update",
+              "host": ["{{base_url}}"],
+              "path": ["api", "webhooks", "payment-update"]
+            }
+          }
+        },
+        {
+          "name": "Test Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"subscriptionId\": \"{{subscription_id}}\",\"event\": \"payment_success\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/webhooks/test",
+              "host": ["{{base_url}}"],
+              "path": ["api", "webhooks", "test"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics (Admin)",
+      "item": [
+        {
+          "name": "Dashboard Analytics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "Subscriptions by Plan",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics/subscriptions-by-plan",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "subscriptions-by-plan"]
+            }
+          }
+        },
+        {
+          "name": "Revenue Analysis",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics/revenue",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "revenue"]
+            }
+          }
+        },
+        {
+          "name": "User Growth",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics/user-growth",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "user-growth"]
+            }
+          }
+        },
+        {
+          "name": "Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics/audit-logs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "audit-logs"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "plan_id",
+      "value": ""
+    },
+    {
+      "key": "subscription_id",
+      "value": ""
+    },
+    {
+      "key": "new_plan_id",
+      "value": ""
+    },
+    {
+      "key": "webhook_signature",
+      "value": ""
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "buildCommand": "npm install",
+  "devCommand": "npm run dev",
+  "outputDirectory": ".",
+  "framework": "nodejs",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/src/server.js"
+    }
+  ]
+}
