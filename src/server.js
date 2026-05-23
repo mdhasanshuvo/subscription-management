@@ -52,6 +52,12 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerSpec = require('./swagger/config');
 
 const swaggerOptions = {
+  // Use CDN assets to avoid missing local swagger-ui files in serverless builds
+  customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui.css',
+  customJs: [
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui-bundle.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui-standalone-preset.js',
+  ],
   customCss: '.topbar { display: none; }',
   customSiteTitle: 'Subscription & Billing API',
   persistAuthorization: true,
