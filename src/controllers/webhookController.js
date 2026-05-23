@@ -11,7 +11,7 @@ const { formatSuccessResponse, formatErrorResponse } = require('../utils/respons
 const verifyWebhookSignature = (payload, signature) => {
   const expectedSignature = crypto
     .createHmac('sha256', process.env.WEBHOOK_SECRET)
-    .update(JSON.stringify(payload))
+    .update(payload)
     .digest('hex');
 
   return signature === expectedSignature;
@@ -32,7 +32,9 @@ const handlePaymentUpdate = async (req, res, next) => {
     const signature = req.headers['x-webhook-signature'];
 
     // Validate webhook secret
-    if (!signature || !verifyWebhookSignature(req.body, signature)) {
+    const rawPayload = req.rawBody || Buffer.from(JSON.stringify(req.body));
+
+    if (!signature || !verifyWebhookSignature(rawPayload, signature)) {
       return res.status(401).json(
         formatErrorResponse('Invalid webhook signature', 401)
       );
@@ -57,6 +59,7 @@ const handlePaymentUpdate = async (req, res, next) => {
 
     // Handle payment success
     if (event === 'payment_success') {
+      const previousStatus = subscription.status;
       subscription.status = 'active';
       await subscription.save();
 
@@ -67,7 +70,7 @@ const handlePaymentUpdate = async (req, res, next) => {
         subscription: subscription._id,
         details: {
           event,
-          previousStatus: subscription.status,
+          previousStatus,
         },
       });
 
@@ -79,6 +82,7 @@ const handlePaymentUpdate = async (req, res, next) => {
 
     // Handle payment failed
     if (event === 'payment_failed') {
+      const previousStatus = subscription.status;
       subscription.status = 'cancelled';
       await subscription.save();
 
@@ -89,7 +93,7 @@ const handlePaymentUpdate = async (req, res, next) => {
         subscription: subscription._id,
         details: {
           event,
-          previousStatus: subscription.status,
+          previousStatus,
         },
       });
 

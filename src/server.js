@@ -31,8 +31,8 @@ app.use(helmet({
 app.use(morgan('combined'));
 
 // CORS middleware
-const corsOrigin = process.env.NODE_ENV === 'production' 
-  ? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '*')
+const corsOrigin = process.env.NODE_ENV === 'production'
+  ? (process.env.PRODUCTION_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '*'))
   : '*';
 
 app.use(cors({
@@ -43,7 +43,12 @@ app.use(cors({
 }));
 
 // Body parser middleware
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({
+  limit: '10mb',
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  },
+}));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // ====== SWAGGER SETUP ======
