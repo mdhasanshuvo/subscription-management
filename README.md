@@ -4,9 +4,9 @@ A production-quality backend system for managing subscription plans, user subscr
 
 ---
 
-## 🔐 Quick Login Credentials (For Recruiters & Demo)
+## 🔐 Quick Login Credentials
 
-**Live API Documentation**: Visit `/api-docs` endpoint to explore all endpoints interactively
+**Live API Documentation**: https://subscriptions-management-backend.vercel.app/api-docs
 
 ### Admin Account (Full Access)
 ```
@@ -133,8 +133,8 @@ NODE_ENV=development
 # Webhook
 WEBHOOK_SECRET=your_webhook_secret_key
 
-# Deployment
-VERCEL_URL=https://your-deployment.vercel.app
+# Deployment (Production)
+PRODUCTION_BASE_URL=https://subscriptions-management-backend.vercel.app
 ```
 
 ### 3. Start Development Server
@@ -152,7 +152,8 @@ npm run dev
 ### 4. Access API Documentation
 
 Once server is running, visit:
-- **Swagger UI**: http://localhost:5000/api-docs
+- **Swagger UI (Local)**: http://localhost:5000/api-docs
+- **Swagger UI (Production)**: https://subscriptions-management-backend.vercel.app/api-docs
 - **Health Check**: http://localhost:5000/health
 
 ## 📚 API Documentation
@@ -448,6 +449,7 @@ vercel
 ### 2. Configure Environment Variables in Vercel Dashboard
 - Go to Project Settings → Environment Variables
 - Add all `.env.example` variables
+- Set `PRODUCTION_BASE_URL` to `https://subscriptions-management-backend.vercel.app`
 
 ### 3. Deploy
 ```bash
@@ -457,7 +459,7 @@ vercel --prod
 ### 4. Set Webhook URL
 Update your payment provider webhook URL to:
 ```
-https://your-vercel-deployment.vercel.app/api/webhooks/payment-update
+https://subscriptions-management-backend.vercel.app/api/webhooks/payment-update
 ```
 
 ## 📝 Example Workflows
