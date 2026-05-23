@@ -21,15 +21,10 @@ const app = express();
 
 // Security middleware with custom CSP for Swagger UI
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-      imgSrc: ["'self'", "data:", "https://"],
-      fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com"],
-    },
-  },
+  contentSecurityPolicy: false, // Disable CSP for Swagger UI to load properly
+  referrerPolicy: { policy: 'no-referrer' },
+  noSniff: true,
+  xssFilter: true,
 }));
 
 // Logging middleware
@@ -57,17 +52,15 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerSpec = require('./swagger/config');
 
 const swaggerOptions = {
-  customCss: `
-    .topbar { display: none; }
-    .swagger-ui .topbar { display: none; }
-  `,
+  customCss: '.topbar { display: none; }',
   customSiteTitle: 'Subscription & Billing API',
-  swaggerOptions: {
-    persistAuthorization: true,
-    displayOperationId: true,
-    filter: true,
-    showRequestHeaders: true,
-  },
+  persistAuthorization: true,
+  displayOperationId: true,
+  filter: true,
+  showRequestHeaders: true,
+  docExpansion: 'list',
+  defaultModelsExpandDepth: 1,
+  defaultModelExpandDepth: 1,
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));

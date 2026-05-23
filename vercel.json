@@ -3,11 +3,5 @@
   "buildCommand": "npm install",
   "devCommand": "npm run dev",
   "outputDirectory": ".",
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/src/server.js"
-    }
-  ]
+  "cleanUrls": false
 }
