@@ -135,6 +135,9 @@ WEBHOOK_SECRET=your_webhook_secret_key
 
 # Deployment (Production)
 PRODUCTION_BASE_URL=https://subscriptions-management-backend.vercel.app
+
+# Docker (Local Compose)
+# MONGODB_URI=mongodb://mongo:27017/subscriptionManagementDB
 ```
 
 ### 3. Start Development Server
@@ -155,6 +158,37 @@ Once server is running, visit:
 - **Swagger UI (Local)**: http://localhost:5000/api-docs
 - **Swagger UI (Production)**: https://subscriptions-management-backend.vercel.app/api-docs
 - **Health Check**: http://localhost:5000/health
+
+## 🐳 Docker Setup
+
+### Option A: Docker Compose (Local MongoDB)
+
+```bash
+docker compose up --build
+```
+
+This starts:
+- API server at http://localhost:5000
+- MongoDB at mongodb://localhost:27017
+
+### Option B: Dockerfile Only (MongoDB Atlas)
+
+```bash
+docker build -t subscription-management .
+docker run -p 5000:5000 \
+  -e MONGODB_URI="<your_mongodb_uri>" \
+  -e JWT_SECRET="<your_jwt_secret>" \
+  -e JWT_EXPIRE="7d" \
+  -e WEBHOOK_SECRET="<your_webhook_secret>" \
+  -e PRODUCTION_BASE_URL="http://localhost:5000" \
+  subscription-management
+```
+
+### Verify Docker
+
+```bash
+curl http://localhost:5000/health
+```
 
 ## 📚 API Documentation
 
