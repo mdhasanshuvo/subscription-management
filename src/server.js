@@ -67,9 +67,6 @@ const swaggerOptions = {
     displayOperationId: true,
     filter: true,
     showRequestHeaders: true,
-    presets: [
-      require('swagger-ui-express/swagger-ui-standalone-preset')
-    ]
   },
 };
 
