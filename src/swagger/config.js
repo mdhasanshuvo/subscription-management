@@ -4,19 +4,19 @@ const getServers = () => {
   const servers = [];
 
   const productionBaseUrl = process.env.PRODUCTION_BASE_URL
-    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null);
-
-  if (productionBaseUrl) {
-    servers.push({
-      url: productionBaseUrl,
-      description: 'Production server (Vercel)',
-    });
-  }
+    || 'https://subscriptions-management-backend.vercel.app';
 
   servers.push({
-    url: 'http://localhost:5000',
-    description: 'Development server (Local)',
+    url: productionBaseUrl,
+    description: 'Production server (Vercel)',
   });
+
+  if (process.env.NODE_ENV !== 'production') {
+    servers.push({
+      url: 'http://localhost:5000',
+      description: 'Development server (Local)',
+    });
+  }
 
   return servers;
 };
