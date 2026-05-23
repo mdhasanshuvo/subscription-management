@@ -56,6 +56,11 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerSpec = require('./swagger/config');
 
+// Serve Swagger UI CSS from CDN to avoid serverless asset issues
+app.get('/api-docs/swagger-ui.css', (req, res) => {
+  res.redirect('https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui.css');
+});
+
 const swaggerOptions = {
   // Use CDN assets to avoid missing local swagger-ui files in serverless builds
   customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui.css',
