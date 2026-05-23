@@ -2,6 +2,36 @@
 
 A production-quality backend system for managing subscription plans, user subscriptions, billing lifecycle, and analytics. Built with Node.js, Express, and MongoDB.
 
+---
+
+## 🔐 Quick Login Credentials (For Recruiters & Demo)
+
+**Live API Documentation**: Visit `/api-docs` endpoint to explore all endpoints interactively
+
+### Admin Account (Full Access)
+```
+Email:    admin@example.com
+Password: admin123456
+```
+- ✅ Manage subscription plans
+- ✅ View analytics & revenue
+- ✅ Access audit logs
+- ✅ Manage users
+
+### User Account (Standard Access)
+```
+Email:    user@example.com
+Password: user123456
+```
+- ✅ Purchase subscriptions
+- ✅ Upgrade/Downgrade plans
+- ✅ View subscription history
+- ✅ Cancel subscriptions
+
+**Use the Login endpoint to get a JWT token, then include it in the Authorization header for protected endpoints.**
+
+---
+
 ## 🎯 Project Overview
 
 This is a complete SaaS subscription management system that handles:

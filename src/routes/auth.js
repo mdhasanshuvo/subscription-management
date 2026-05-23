@@ -64,7 +64,18 @@ router.post('/register',
  *     tags:
  *       - Auth
  *     summary: Login user
- *     description: Authenticate user and get JWT token
+ *     description: |
+ *       Authenticate user and get JWT token.
+ *       
+ *       🔐 **DEFAULT TEST CREDENTIALS:**
+ *       
+ *       **Admin Account:**
+ *       - Email: admin@example.com
+ *       - Password: admin123456
+ *       
+ *       **User Account:**
+ *       - Email: user@example.com
+ *       - Password: user123456
  *     requestBody:
  *       required: true
  *       content:
@@ -77,8 +88,10 @@ router.post('/register',
  *             properties:
  *               email:
  *                 type: string
+ *                 example: admin@example.com
  *               password:
  *                 type: string
+ *                 example: admin123456
  *     responses:
  *       200:
  *         description: Login successful

@@ -6,7 +6,24 @@ const options = {
     info: {
       title: 'Subscription & Billing API System',
       version: '1.0.0',
-      description: 'Production-quality subscription management API with billing lifecycle management',
+      description: `Production-quality subscription management API with billing lifecycle management.
+      
+🔐 DEFAULT TEST CREDENTIALS FOR RECRUITERS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👨‍💼 ADMIN ACCOUNT:
+   Email: admin@example.com
+   Password: admin123456
+   Role: admin (full access to analytics, plan management, audit logs)
+
+👤 USER ACCOUNT:
+   Email: user@example.com
+   Password: user123456
+   Role: user (can purchase, upgrade, downgrade subscriptions)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Use the Login endpoint to get a JWT token, then use it in the Authorization header for protected endpoints.`,
       contact: {
         name: 'API Support',
       },

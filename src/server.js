@@ -72,10 +72,23 @@ const startServer = async () => {
 
     // Start Express server
     app.listen(PORT, () => {
-      console.log('\n✓ Server started successfully');
+      console.log('\n' + '='.repeat(60));
+      console.log('✓ Server started successfully');
       console.log(`✓ Server running on http://localhost:${PORT}`);
       console.log(`✓ API Documentation: http://localhost:${PORT}/api-docs`);
-      console.log(`✓ Environment: ${process.env.NODE_ENV}\n`);
+      console.log(`✓ Environment: ${process.env.NODE_ENV}`);
+      console.log('='.repeat(60));
+      console.log('\n🔐 DEFAULT TEST CREDENTIALS FOR RECRUITERS:');
+      console.log('━'.repeat(60));
+      console.log('\n👨‍💼 ADMIN ACCOUNT:');
+      console.log('   Email:    admin@example.com');
+      console.log('   Password: admin123456');
+      console.log('   Role:     admin (full access)');
+      console.log('\n👤 USER ACCOUNT:');
+      console.log('   Email:    user@example.com');
+      console.log('   Password: user123456');
+      console.log('   Role:     user (standard access)');
+      console.log('\n' + '━'.repeat(60) + '\n');
     });
   } catch (error) {
     console.error('✗ Failed to start server:', error.message);
