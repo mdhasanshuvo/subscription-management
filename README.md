@@ -161,15 +161,22 @@ Once server is running, visit:
 
 ## 🐳 Docker Setup
 
-### Option A: Docker Compose (Local MongoDB)
+### Option A: Docker Compose (MongoDB Atlas)
+
+1. Copy the Docker env template:
+
+```bash
+cp .env.docker.example .env
+```
+
+2. Update `MONGODB_URI`, `JWT_SECRET`, and `WEBHOOK_SECRET` in `.env`.
+3. Start containers:
 
 ```bash
 docker compose up --build
 ```
 
-This starts:
-- API server at http://localhost:5000
-- MongoDB at mongodb://localhost:27017
+This starts the API server at http://localhost:5000 and connects to MongoDB Atlas.
 
 ### Option B: Dockerfile Only (MongoDB Atlas)
 
