@@ -2,21 +2,22 @@ const swaggerJsdoc = require('swagger-jsdoc');
 
 const getServers = () => {
   const servers = [];
-  
-  // Add production server if VERCEL_URL is set
-  if (process.env.VERCEL_URL) {
+
+  const productionBaseUrl = process.env.PRODUCTION_BASE_URL
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null);
+
+  if (productionBaseUrl) {
     servers.push({
-      url: `https://${process.env.VERCEL_URL}`,
+      url: productionBaseUrl,
       description: 'Production server (Vercel)',
     });
   }
-  
-  // Add development server
+
   servers.push({
     url: 'http://localhost:5000',
     description: 'Development server (Local)',
   });
-  
+
   return servers;
 };
 
